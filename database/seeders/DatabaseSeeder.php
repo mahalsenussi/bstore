@@ -19,6 +19,7 @@ $this->call([
             RolesAndPermissionsSeeder::class,
             BrandSeeder::class,
             ProductSeeder::class,
+            InventorySeeder::class,
         ]);
 
         $admin = User::firstOrCreate(
