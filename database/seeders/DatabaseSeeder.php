@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
+$this->call([
             RolesAndPermissionsSeeder::class,
-            \Database\Seeders\BrandSeeder::class,
+            BrandSeeder::class,
+            ProductSeeder::class,
         ]);
 
         $admin = User::firstOrCreate(
