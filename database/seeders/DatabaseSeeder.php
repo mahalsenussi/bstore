@@ -17,13 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesAndPermissionsSeeder::class,
+            \Database\Seeders\BrandSeeder::class,
         ]);
 
-        $admin = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@bstore.com',
-            'password' => 'password',
-        ]);
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@bstore.com'],
+            [
+                'name' => 'Admin',
+                'password' => 'password',
+            ]
+        );
         $admin->assignRole('super-admin');
     }
 }
