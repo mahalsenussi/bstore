@@ -36,6 +36,11 @@ class ProductVariant extends Model
 
     public function inventory()
     {
-        return $this->hasMany(Inventory::class);
+        return $this->hasMany(Inventory::class, 'variant_id');
+    }
+
+    public function getAvailableQuantityAttribute(): int
+    {
+        return (int) $this->inventory()->sum(\Illuminate\Support\Facades\DB::raw('stock_quantity - reserved_quantity'));
     }
 }

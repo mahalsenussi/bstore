@@ -54,4 +54,26 @@ class Product extends Model
     {
         return $this->variants()->where('status', true)->min('price');
     }
+
+    public function getMaxPriceAttribute()
+    {
+        $compare = $this->variants()->where('status', true)
+            ->whereNotNull('compare_at_price')
+            ->max('compare_at_price');
+
+        return $compare ?: $this->price_from;
+    }
+
+    public function getIsStockedAttribute(): bool
+    {
+        return $this->variants()->where('status', true)->get()
+            ->contains(fn ($v) => $v->available_quantity > 0);
+    }
+
+    public function getCoverUrlAttribute(): ?string
+    {
+        $cover = $this->coverImage;
+
+        return $cover ? \Illuminate\Support\Facades\Storage::disk('public')->url($cover->path) : null;
+    }
 }
